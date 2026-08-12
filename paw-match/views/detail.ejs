@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title><%= pet.name %> — Pawssible</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/detail.css">
+</head>
+<body>
+
+<div class="paw-field" aria-hidden="true">
+  <div class="paw p1"><svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg></div>
+  <div class="paw p2"><svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg></div>
+  <div class="paw p3"><svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg></div>
+  <div class="paw p4"><svg viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg></div>
+</div>
+
+<header>
+  <a href="/" class="logo">
+    <svg class="paw-icon" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg>
+    Pawssible
+  </a>
+  <a href="/" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    Back to all pets
+  </a>
+</header>
+
+<main>
+  <div class="detail-grid">
+    <div class="photo-panel" data-type="<%= pet.type %>">
+      <% if (pet.image) { %>
+        <img class="animal-photo" src="<%= pet.image %>" alt="Photo of <%= pet.name %>" />
+      <% } else if (pet.type === 'dog') { %>
+        <svg class="animal-icon" viewBox="0 0 100 100" fill="currentColor">
+          <ellipse cx="50" cy="60" rx="30" ry="24"/>
+          <ellipse cx="28" cy="34" rx="12" ry="18" transform="rotate(-20 28 34)"/>
+          <ellipse cx="72" cy="34" rx="12" ry="18" transform="rotate(20 72 34)"/>
+          <circle cx="50" cy="50" r="22"/>
+        </svg>
+      <% } else { %>
+        <svg class="animal-icon" viewBox="0 0 100 100" fill="currentColor">
+          <circle cx="50" cy="55" r="24"/>
+          <polygon points="26,38 34,14 42,36"/>
+          <polygon points="74,38 66,14 58,36"/>
+        </svg>
+      <% } %>
+      <span class="status-badge"><%= pet.status %></span>
+      <svg class="paw-corner" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg>
+    </div>
+
+    <div class="info-panel">
+      <span class="eyebrow">🐾 <%= pet.city %></span>
+      <h1><%= pet.name %></h1>
+      <div class="breed-line"><%= pet.breed %></div>
+
+      <div class="stat-row">
+        <div class="stat-pill"><span class="label">Age</span><%= pet.age %> yr<%= pet.age !== 1 ? 's' : '' %></div>
+        <div class="stat-pill"><span class="label">Gender</span><%= pet.gender.charAt(0).toUpperCase() + pet.gender.slice(1) %></div>
+        <div class="stat-pill"><span class="label">Size</span><%= pet.size.charAt(0).toUpperCase() + pet.size.slice(1) %></div>
+        <div class="stat-pill"><span class="label">Energy</span><%= pet.energyLevel.charAt(0).toUpperCase() + pet.energyLevel.slice(1) %></div>
+      </div>
+
+      <div class="about">
+        <h2>About <%= pet.name %></h2>
+        <p><%= pet.description %></p>
+      </div>
+
+      <div class="traits-section">
+        <h2>Good to know</h2>
+        <div class="trait-grid">
+          <div class="trait-card <%= pet.vaccinated ? 'yes' : 'no' %>">
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>
+            </span>
+            <%= pet.vaccinated ? 'Vaccinated' : 'Not vaccinated' %>
+          </div>
+          <div class="trait-card <%= pet.neutered ? 'yes' : 'no' %>">
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>
+            </span>
+            <%= pet.neutered ? 'Neutered' : 'Not neutered' %>
+          </div>
+          <div class="trait-card <%= pet.goodWithKids ? 'yes' : 'no' %>">
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>
+            </span>
+            <%= pet.goodWithKids ? 'Good with kids' : 'Better without kids' %>
+          </div>
+          <div class="trait-card <%= pet.goodWithPets ? 'yes' : 'no' %>">
+            <span class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 12l5 5L20 6"/></svg>
+            </span>
+            <%= pet.goodWithPets ? 'Good with other pets' : 'Prefers to be the only pet' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button class="adopt-btn">Start adoption for <%= pet.name %></button>
+        <button class="share-btn">Share</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Made with 🐾 in Belgium — every pet deserves a soft place to land.
+</footer>
+
+</body>
+</html>
