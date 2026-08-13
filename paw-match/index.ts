@@ -21,6 +21,10 @@ app.get("/", async (req, res) => {
   });
 });
 
+app.get("/admin", async (req, res) => {
+  const pets = await getPets();
+  res.render("admin", { pets });
+});
 
 app.get("/:pet", async (req, res) => {
   const petName = typeof req.params.pet === "string" ? req.params.pet : "";

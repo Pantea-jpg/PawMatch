@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pawssible — Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+
+  <div class="paw-field" aria-hidden="true">
+    <div class="paw p1">
+      <svg viewBox="0 0 64 64" fill="currentColor">
+        <ellipse cx="32" cy="42" rx="16" ry="13"/>
+        <ellipse cx="14" cy="20" rx="7" ry="9"/>
+        <ellipse cx="32" cy="12" rx="7" ry="9"/>
+        <ellipse cx="50" cy="20" rx="7" ry="9"/>
+        <ellipse cx="52" cy="34" rx="6" ry="8"/>
+      </svg>
+    </div>
+
+    <div class="paw p2">
+      <svg viewBox="0 0 64 64" fill="currentColor">
+        <ellipse cx="32" cy="42" rx="16" ry="13"/>
+        <ellipse cx="14" cy="20" rx="7" ry="9"/>
+        <ellipse cx="32" cy="12" rx="7" ry="9"/>
+        <ellipse cx="50" cy="20" rx="7" ry="9"/>
+        <ellipse cx="52" cy="34" rx="6" ry="8"/>
+      </svg>
+    </div>
+
+    <div class="paw p3">
+      <svg viewBox="0 0 64 64" fill="currentColor">
+        <ellipse cx="32" cy="42" rx="16" ry="13"/>
+        <ellipse cx="14" cy="20" rx="7" ry="9"/>
+        <ellipse cx="32" cy="12" rx="7" ry="9"/>
+        <ellipse cx="50" cy="20" rx="7" ry="9"/>
+        <ellipse cx="52" cy="34" rx="6" ry="8"/>
+      </svg>
+    </div>
+  </div>
+
+  <header>
+  <div class="logo">
+    <svg class="paw-icon" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="42" rx="16" ry="13"/><ellipse cx="14" cy="20" rx="7" ry="9"/><ellipse cx="32" cy="12" rx="7" ry="9"/><ellipse cx="50" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="34" rx="6" ry="8"/></svg>
+    Pawssible  <span class="admin-label">Admin</span>
+  </div>
+ 
+  <nav>
+    <a href="#">Profile</a>
+    <a href="#">Adopt</a>
+    <a href="#">How It Works</a>
+    <a href="#">Volunteer</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+
+
+  <main class="admin-container">
+
+    <section class="admin-hero">
+
+      <div>
+        <span class="hero-badge">🐾 Management Center</span>
+
+        <h1>Pet <span>Management</span></h1>
+
+        <p>
+          Add, edit and manage all the lovely pets waiting for their forever home.
+        </p>
+      </div>
+      <div>
+        <a href="/" class="back-btn">
+      ← View Website
+        </a>
+        <button class="add-btn" id="openAddModal">
+        <span>＋</span>
+        Add New Pet
+      </button>
+      </div>
+      
+
+    </section>
+
+
+    <!-- Statistics -->
+
+    <section class="stats">
+
+      <div class="stat-card">
+        <div class="stat-icon">🐾</div>
+        <div>
+          <strong><%= pets.length %></strong>
+          <span>Total Pets</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon available">🏠</div>
+        <div>
+          <strong>
+            <%= pets.filter(p => p.status === 'available').length %>
+          </strong>
+          <span>Available</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon dog">🐶</div>
+        <div>
+          <strong>
+            <%= pets.filter(p => p.type === 'dog').length %>
+          </strong>
+          <span>Dogs</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon cat">🐱</div>
+        <div>
+          <strong>
+            <%= pets.filter(p => p.type === 'cat').length %>
+          </strong>
+          <span>Cats</span>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- Toolbar -->
+
+    <section class="management-card">
+
+      <div class="toolbar">
+
+        <div class="search-box">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+
+          <input
+            type="text"
+            id="adminSearch"
+            placeholder="Search pets..."
+            autocomplete="off"
+          />
+
+        </div>
+
+
+        <div class="filter-buttons">
+
+          <button class="filter active" data-filter="all">
+            All
+          </button>
+
+          <button class="filter" data-filter="dog">
+            🐶 Dogs
+          </button>
+
+          <button class="filter" data-filter="cat">
+            🐱 Cats
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Table -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Pet</th>
+              <th>Type</th>
+              <th>Location</th>
+              <th>Age</th>
+              <th>Status</th>
+              <th>Traits</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody id="petTable">
+
+            <% pets.forEach(function(pet) { %>
+
+              <tr
+                data-type="<%= pet.type %>"
+                data-search="<%= `${pet.name} ${pet.breed} ${pet.city}`.toLowerCase() %>"
+              >
+
+                <td>
+
+                  <div class="pet-info">
+
+                    <div class="pet-avatar">
+
+                      <% if (pet.image) { %>
+
+                        <img
+                          src="<%= pet.image %>"
+                          alt="<%= pet.name %>"
+                        />
+
+                      <% } else { %>
+
+                        <span>
+                          <%= pet.type === 'dog' ? '🐶' : '🐱' %>
+                        </span>
+
+                      <% } %>
+
+                    </div>
+
+                    <div>
+                      <strong><%= pet.name %></strong>
+                      <small><%= pet.breed %></small>
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+                  <span class="type-pill <%= pet.type %>">
+                    <%= pet.type === 'dog' ? '🐶 Dog' : '🐱 Cat' %>
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="location">
+                    📍 <%= pet.city %>
+                  </span>
+                </td>
+
+
+                <td>
+                  <strong><%= pet.age %></strong>
+                  yr<%= pet.age !== 1 ? 's' : '' %>
+                </td>
+
+
+                <td>
+
+                  <span class="status <%= pet.status %>">
+                    <%= pet.status %>
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <div class="trait-mini">
+
+                    <span class="<%= pet.goodWithKids ? 'yes' : 'no' %>">
+                      Kids
+                    </span>
+
+                    <span class="<%= pet.goodWithPets ? 'yes' : 'no' %>">
+                      Pets
+                    </span>
+
+                    <span class="<%= pet.vaccinated ? 'yes' : 'no' %>">
+                      Vaccinated
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <div class="actions">
+
+                    <button
+                      class="action edit"
+                      title="Edit"
+                      data-id="<%= pet._id || pet.id || '' %>"
+                      data-pet='<%- JSON.stringify(pet) %>'
+                    >
+                      ✏️
+                    </button>
+
+
+                    <button
+                      class="action delete"
+                      title="Delete"
+                      data-id="<%= pet._id || pet.id || '' %>"
+                      data-name="<%= pet.name %>"
+                    >
+                      🗑️
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            <% }); %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="no-results" id="noResults">
+        🐾 No pets found.
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ADD / EDIT MODAL -->
+
+  <div class="modal-overlay" id="petModal">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <div>
+          <span class="modal-kicker">🐾 Pawssible</span>
+          <h2 id="modalTitle">Add New Pet</h2>
+        </div>
+
+        <button class="close-modal" id="closeModal">
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        id="petForm"
+        method="POST"
+        action="/admin/pets"
+      >
+
+        <input type="hidden" name="_method" id="methodField" value="POST">
+        <input type="hidden" name="id" id="petId">
+
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+
+            <label>Photo URL</label>
+
+            <input
+              type="url"
+              name="image"
+              id="image"
+              placeholder="https://..."
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Name *</label>
+
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              placeholder="e.g. Luna"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Breed *</label>
+
+            <input
+              type="text"
+              name="breed"
+              id="breed"
+              required
+              placeholder="e.g. Golden Retriever"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Type *</label>
+
+            <select name="type" id="type" required>
+              <option value="dog">🐶 Dog</option>
+              <option value="cat">🐱 Cat</option>
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>City *</label>
+
+            <input
+              type="text"
+              name="city"
+              id="city"
+              required
+              placeholder="e.g. Brussels"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Age *</label>
+
+            <input
+              type="number"
+              name="age"
+              id="age"
+              min="0"
+              max="30"
+              required
+              placeholder="2"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Gender</label>
+
+            <select name="gender" id="gender">
+
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Size</label>
+
+            <select name="size" id="size">
+
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Energy Level</label>
+
+            <select name="energyLevel" id="energyLevel">
+
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Status</label>
+
+            <select name="status" id="status">
+
+              <option value="available">Available</option>
+              <option value="pending">Pending</option>
+              <option value="adopted">Adopted</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group full">
+
+            <label>Description</label>
+
+            <textarea
+              name="description"
+              id="description"
+              rows="4"
+              placeholder="Tell people about this lovely pet..."
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <div class="checkbox-section">
+
+          <label class="check-option">
+
+            <input
+              type="checkbox"
+              name="goodWithKids"
+              id="goodWithKids"
+            />
+
+            <span class="checkmark">✓</span>
+
+            <span>
+              Good with kids
+            </span>
+
+          </label>
+
+
+          <label class="check-option">
+
+            <input
+              type="checkbox"
+              name="goodWithPets"
+              id="goodWithPets"
+            />
+
+            <span class="checkmark">✓</span>
+
+            <span>
+              Good with pets
+            </span>
+
+          </label>
+
+
+          <label class="check-option">
+
+            <input
+              type="checkbox"
+              name="vaccinated"
+              id="vaccinated"
+            />
+
+            <span class="checkmark">✓</span>
+
+            <span>
+              Vaccinated
+            </span>
+
+          </label>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelModal"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-btn"
+          >
+            <span id="saveText">Add Pet</span>
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- DELETE MODAL -->
+
+  <div class="modal-overlay" id="deleteModal">
+
+    <div class="delete-modal">
+
+      <div class="delete-icon">
+        🗑️
+      </div>
+
+      <h2>Delete this pet?</h2>
+
+      <p>
+        Are you sure you want to remove
+        <strong id="deletePetName"></strong>?
+        This action cannot be undone.
+      </p>
+
+      <form id="deleteForm" method="POST">
+
+        <input type="hidden" name="_method" value="DELETE">
+
+        <div class="delete-actions">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            id="cancelDelete"
+          >
+            Keep Pet
+          </button>
+
+          <button
+            type="submit"
+            class="confirm-delete"
+          >
+            Delete Pet
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script src="/script/admin.js"></script>
+
+</body>
+</html>
