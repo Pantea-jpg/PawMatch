@@ -26,6 +26,87 @@ body {
   overflow-x: hidden;
 }
 
+/* ---------- Search Bar ---------- */
+.search-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0 6% 28px;
+  animation: pop-in 0.7s ease both 0.12s;
+}
+.search-box {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+}
+.search-box input {
+  width: 100%;
+  padding: 14px 50px 14px 50px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--plum);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.search-box input::placeholder {
+  color: var(--plum-soft);
+  font-weight: 600;
+}
+.search-box input:focus {
+  border-color: var(--coral-deep);
+  box-shadow: var(--shadow-hover);
+}
+.search-box .search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--plum-soft);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+.search-box input:focus ~ .search-icon {
+  color: var(--coral-deep);
+}
+.search-box .clear-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream-deep);
+  color: var(--plum-soft);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.search-box .clear-btn:hover {
+  background: var(--coral-deep);
+  color: var(--white);
+}
+.search-box input:not(:placeholder-shown) ~ .clear-btn {
+  display: flex;
+}
+
 /* ---------- Floating background paws ---------- */
 .paw-field {
   position: fixed;
