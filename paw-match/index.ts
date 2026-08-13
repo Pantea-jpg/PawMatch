@@ -21,6 +21,7 @@ app.get("/", async (req, res) => {
   });
 });
 
+
 app.get("/:pet", async (req, res) => {
   const petName = typeof req.params.pet === "string" ? req.params.pet : "";
   const pet = await collection.findOne({ name: petName });

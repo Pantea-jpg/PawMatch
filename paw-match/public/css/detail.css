@@ -99,14 +99,27 @@ header {
   display: flex;
   align-items: center;
   gap: 8px;
-  text-decoration: none;
 }
 .logo .paw-icon {
   width: 28px;
   height: 28px;
   color: var(--coral-deep);
 }
+nav a {
+  margin-left: 28px;
+  text-decoration: none;
+  color: var(--plum-soft);
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+nav a:hover {
+  color: var(--coral-deep);
+}
 
+main > .back-link {
+  margin-bottom: 18px;
+}
 .back-link {
   display: inline-flex;
   align-items: center;
